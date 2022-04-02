@@ -1,3 +1,5 @@
+package model;
+
 import java.util.Objects;
 
 /**
@@ -6,23 +8,23 @@ import java.util.Objects;
  * @author Vladimir Ivanov (ivanov.vladimir.l@gmail.com)
  */
 public class Задача {
-	private String название;
-	private String описание;
-	private int ид;
-	private String cтатус;
+	protected String название;
+	protected String описание;
+	protected int ид;
+	protected String статус;
 
-	public Задача(String название, String описание, int ид, String cтатус) {
+	public Задача(String название, String описание, int ид, String статус) {
 		this.название = название;
 		this.описание = описание;
 		this.ид = ид;
-		this.cтатус = cтатус;
+		this.статус = статус;
 	}
 
-	public Задача(String название, String описание, String cтатус) {
+	public Задача(String название, String описание, String статус) {
 		this.название = название;
 		this.описание = описание;
 		this.ид = 0;
-		this.cтатус = cтатус;
+		this.статус = статус;
 	}
 
 	@Override
@@ -30,12 +32,12 @@ public class Задача {
 		if (this == o) return true;
 		if (!(o instanceof Задача)) return false;
 		Задача задача = (Задача) o;
-		return ид == задача.ид && Objects.equals(название, задача.название) && Objects.equals(описание, задача.описание) && Objects.equals(cтатус, задача.cтатус);
+		return ид == задача.ид && Objects.equals(название, задача.название) && Objects.equals(описание, задача.описание) && Objects.equals(статус, задача.статус);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(название, описание, ид, cтатус);
+		return Objects.hash(название, описание, ид, статус);
 	}
 
 	public String getНазвание() {
@@ -62,12 +64,12 @@ public class Задача {
 		this.ид = ид;
 	}
 
-	public String getCтатус() {
-		return cтатус;
+	public String getСтатус() {
+		return статус;
 	}
 
-	public void setCтатус(String cтатус) {
-		this.cтатус = cтатус;
+	public void setСтатус(String статус) {
+		this.статус = статус;
 	}
 
 	@Override
@@ -76,7 +78,7 @@ public class Задача {
 				"название='" + название + '\'' +
 				", описание='" + описание + '\'' +
 				", ид=" + ид +
-				", cтатус='" + cтатус + '\'' +
+				", cтатус='" + статус + '\'' +
 				'}';
 	}
 }

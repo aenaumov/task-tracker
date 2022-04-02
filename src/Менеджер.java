@@ -1,6 +1,11 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import model.Задача;
+import model.Подзадача;
+import model.Статус;
+import model.Эпик;
+
 /**
  * Менеджера задач.
  *
@@ -8,6 +13,8 @@ import java.util.HashMap;
  */
 public class Менеджер {
 	private final HashMap<Integer, Задача> задачи = new HashMap<>();
+	private final HashMap<Integer, Подзадача> подзадачи = new HashMap<>();
+	private final HashMap<Integer, Эпик> эпики = new HashMap<>();
 	private int генераторИД = 0;
 
 	/**
@@ -58,9 +65,60 @@ public class Менеджер {
 		задачи.remove(ид);
 	}
 
-	private void обновитьСтатус(Эпик эпик) {
-		for (Подзадача подзадача : эпик.getПодзадачи()) {
+	/**
+	 * Список всех эпиков
+	 *
+	 * @return
+	 */
+	public ArrayList<Эпик> получениеЭпиков() {
+		return new ArrayList<>(эпики.values());
+	}
 
+	/**
+	 * Удаление всех эпиков
+	 */
+	public void удалениеЭпиков() {
+		эпики.clear();
+		подзадачи.clear();
+	}
+
+	/**
+	 * Получение по идентификатору
+	 */
+	public Эпик получениеЭпиков(int ид) {
+		return эпики.get(ид);
+	}
+
+	/**
+	 * Создание. Сам объект должен передаваться в качестве параметра.
+	 */
+	public void созданиеЭпика(Эпик эпик) {
+		эпик.setИд(++генераторИД);
+		эпик.setСтатус(Статус.NEW);
+		эпики.put(эпик.getИд(), эпик);
+	}
+
+	/**
+	 * Обновление. Новая версия объекта с верным идентификатором передаются в виде параметра.
+	 */
+	public void обновлениеЭпика(Эпик эпик) {
+		final Эпик эпикСохраненный = эпики.get(эпик.getИд());
+		if (эпикСохраненный == null) {
+			return;
+		}
+		эпикСохраненный.setНазвание(эпик.getНазвание());
+		эпикСохраненный.setОписание(эпик.getОписание());
+	}
+
+	/**
+	 * Удаление по идентификатору
+	 */
+	public void удалениеЭпика(int ид) {
+		final Эпик эпик = эпики.remove(ид);
+		for (Подзадача подзадача : эпик.getПодзадачи()) {
+			подзадачи.remove(подзадача.getИд());
 		}
 	}
+
+
 }
