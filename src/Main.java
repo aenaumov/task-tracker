@@ -1,10 +1,12 @@
+import controller.Менеджер;
+import controller.Менеджеры;
 import model.Задача;
 import model.Статус;
 import model.Эпик;
 
 public class Main {
     public static void main(String[] args) {
-        Менеджер менеджер = new Менеджер();
+        Менеджер менеджер = Менеджеры.получитьМенеджера();
 
         Задача задача = new Задача("Тест", "Описание", Статус.NEW);
         менеджер.созданиеЗадачи(задача);
