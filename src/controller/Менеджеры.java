@@ -7,18 +7,16 @@ package controller;
  */
 public class Менеджеры {
 
-	private static final ВПамятиМенеджер вПамятиМенеджер;
 	private static final ВПамятиИсторияЗадач вПамятиИсторияЗадач;
 
 	static {
 		вПамятиИсторияЗадач = new ВПамятиИсторияЗадач();
-		вПамятиМенеджер = new ВПамятиМенеджер();
 //		вПамятиМенеджер.setИстория(вПамятиИсторияЗадач);
 	}
 
 
 	public static Менеджер получитьМенеджера() {
-		return вПамятиМенеджер;
+		return new FileBackedTasksManager();
 	}
 
 	public static ИсторияЗадач получитьИсторияЗадач() {

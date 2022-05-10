@@ -72,6 +72,10 @@ public class Задача {
 		this.статус = статус;
 	}
 
+	public ТипыЗадач getТип() {
+		return ТипыЗадач.TASK;
+	}
+
 	@Override
 	public String toString() {
 		return "Задача{" +

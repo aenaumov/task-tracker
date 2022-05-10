@@ -1,3 +1,6 @@
+import java.io.File;
+
+import controller.FileBackedTasksManager;
 import controller.Менеджер;
 import controller.Менеджеры;
 import model.Задача;
@@ -7,6 +10,8 @@ import model.Эпик;
 public class Main {
     public static void main(String[] args) {
         Менеджер менеджер = Менеджеры.получитьМенеджера();
+        Менеджер менеджер2 = new FileBackedTasksManager(new File("task.csv"), true);
+        // TODO менеджер == менеджер2
 
         Задача задача = new Задача("Тест", "Описание", Статус.NEW);
         менеджер.созданиеЗадачи(задача);

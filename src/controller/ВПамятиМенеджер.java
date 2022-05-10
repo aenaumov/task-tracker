@@ -18,11 +18,11 @@ public class ВПамятиМенеджер implements Менеджер {
 	МенеджерЗадач<Задача> менеджерЗадач;
 	МенеджерЗадач<Подзадача> менеджерПодзадач;
 	МенеджерЗадач<Эпик> менеджерЭпик;
-	private final HashMap<Integer, Задача> задачи = new HashMap<>();
-	private final HashMap<Integer, Подзадача> подзадачи = new HashMap<>();
-	private final HashMap<Integer, Эпик> эпики = new HashMap<>();
-	private int генераторИД = 0;
-	private final ИсторияЗадач историяЗадач = Менеджеры.получитьИсторияЗадач();
+	protected final HashMap<Integer, Задача> задачи = new HashMap<>();
+	protected final HashMap<Integer, Подзадача> подзадачи = new HashMap<>();
+	protected final HashMap<Integer, Эпик> эпики = new HashMap<>();
+	protected int генераторИД = 0;
+	protected final ИсторияЗадач историяЗадач = Менеджеры.получитьИсторияЗадач();
 
 	@Override
 	public List<Задача> получениеЗадач() {
