@@ -15,7 +15,8 @@ public class Подзадача extends Задача {
 		this.эпикИД = эпикИД;
 	}
 
-	public int getЭпикИД() {
+	@Override
+	public Integer getЭпикИД() {
 		return эпикИД;
 	}
 

@@ -32,7 +32,7 @@ public class FileBackedTasksManager extends ВПамятиМенеджер {
 		this(file, false);
 	}
 
-	public FileBackedTasksManager(File file, boolean load) {
+	protected FileBackedTasksManager(File file, boolean load) {
 		this.file = file;
 		if (load) {
 			load();
@@ -40,65 +40,65 @@ public class FileBackedTasksManager extends ВПамятиМенеджер {
 	}
 
 	@Override
-	public List<Задача> получениеЗадач() {
-		final List<Задача> задачи = super.получениеЗадач();
-		save();
-		return задачи;
-	}
-
-	@Override
 	public void удалениеЗадач() {
+		save();
 		super.удалениеЗадач();
 	}
 
 	@Override
 	public Задача получениеЗадачи(int ид) {
-		return super.получениеЗадачи(ид);
+		final Задача задача = super.получениеЗадачи(ид);
+		save();
+		return задача;
 	}
 
 	@Override
 	public void созданиеЗадачи(Задача задача) {
 		super.созданиеЗадачи(задача);
+		save();
 	}
 
 	@Override
 	public void обновлениеЗадачи(Задача задача) {
 		super.обновлениеЗадачи(задача);
+		save();
 	}
 
 	@Override
 	public void удалениеЗадачи(int ид) {
 		super.удалениеЗадачи(ид);
-	}
-
-	@Override
-	public List<Эпик> получениеЭпиков() {
-		return super.получениеЭпиков();
+		save();
 	}
 
 	@Override
 	public void удалениеЭпиков() {
 		super.удалениеЭпиков();
+		save();
 	}
 
 	@Override
-	public Эпик получениеЭпиков(int ид) {
-		return super.получениеЭпиков(ид);
+	public Эпик получениеЭпика(int ид) {
+		final Эпик эпик = super.получениеЭпика(ид);
+		save();
+		return эпик;
 	}
 
 	@Override
 	public void созданиеЭпика(Эпик эпик) {
 		super.созданиеЭпика(эпик);
+		save();
 	}
 
 	@Override
 	public void обновлениеЭпика(Эпик эпик) {
 		super.обновлениеЭпика(эпик);
+		save();
 	}
 
 	@Override
 	public void удалениеЭпика(int ид) {
 		super.удалениеЭпика(ид);
+		save();
 	}
 
 	// Todo
@@ -131,7 +131,6 @@ public class FileBackedTasksManager extends ВПамятиМенеджер {
 		final String[] ид = value.split(",");
 		List<Integer> история = new ArrayList<>();
 		for (String v : ид) {
-//			история.add(Integer.parseInt(v));
 			история.add(Integer.valueOf(v));
 		}
 		return история;
@@ -166,6 +165,9 @@ public class FileBackedTasksManager extends ВПамятиМенеджер {
 			reader.readLine(); // Пропускаем заголовок
 			while (true) {
 				String line = reader.readLine();
+				if (line == null || line.isEmpty()) {
+					break;
+				}
 				// Задачи
 				final Задача задача = fromString(line);
 				// TODO добавить задачу в менеджер
@@ -179,16 +181,13 @@ public class FileBackedTasksManager extends ВПамятиМенеджер {
 				if (maxId < id) {
 					maxId = id;
 				}
-				if (line.isEmpty()) {
-					break;
-				}
 			}
 
 			String line = reader.readLine();
 			// История
 
 		} catch (IOException e) {
-			throw new RuntimeException(e); // TODO ManagerSaveException
+			throw new RuntimeException("Error load from file: " + file.getName(), e); // TODO ManagerSaveException
 		}
 		// генератор
 		генераторИД = maxId;

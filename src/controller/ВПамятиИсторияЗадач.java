@@ -17,6 +17,7 @@ public class ВПамятиИсторияЗадач implements ИсторияЗ�
 
 	Node<Задача> first;
 	Node<Задача> last;
+
 	public static class Node<E> {
 		E item;
 		Node<E> next;
@@ -43,16 +44,19 @@ public class ВПамятиИсторияЗадач implements ИсторияЗ�
 	@Override
 	public List<Задача> получитьИсторию() {
 		final List<Задача> list = new ArrayList<>();
-		final Node<Задача> node = first;
+		Node<Задача> node = first;
 		while (node != null) {
-			// Todo add to list
+			list.add(node.item);
+			node = node.next;
 		}
 		return list;
 	}
 
 	@Override
 	public void добавить(Задача задача) {
-		// Todo задача != null
+		if (задача == null) {
+			return;
+		}
 		final Node<Задача> node = nodeByIdMap.get(задача.getИд());
 		if (node != null) {
 			removeNode(node);
@@ -77,11 +81,11 @@ public class ВПамятиИсторияЗадач implements ИсторияЗ�
 		}
 		// 3. Конец
 		if (node == last) {
-			// TODO
+			last = node.prev;
+			node.next = null;
 			return;
 		}
 		// 2. Середина
-		// TODO
 		final Node<Задача> prev = node.prev;
 		final Node<Задача> next = node.next;
 		prev.next = next;

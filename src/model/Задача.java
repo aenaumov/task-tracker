@@ -8,9 +8,9 @@ import java.util.Objects;
  * @author Vladimir Ivanov (ivanov.vladimir.l@gmail.com)
  */
 public class Задача {
+	protected int ид;
 	protected String название;
 	protected String описание;
-	protected int ид;
 	protected String статус;
 
 	public Задача(String название, String описание, int ид, String статус) {
@@ -74,6 +74,10 @@ public class Задача {
 
 	public ТипыЗадач getТип() {
 		return ТипыЗадач.TASK;
+	}
+
+	public Integer getЭпикИД() {
+		return null;
 	}
 
 	@Override

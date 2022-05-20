@@ -15,9 +15,6 @@ import model.Эпик;
  * @author Vladimir Ivanov (ivanov.vladimir.l@gmail.com)
  */
 public class ВПамятиМенеджер implements Менеджер {
-	МенеджерЗадач<Задача> менеджерЗадач;
-	МенеджерЗадач<Подзадача> менеджерПодзадач;
-	МенеджерЗадач<Эпик> менеджерЭпик;
 	protected final HashMap<Integer, Задача> задачи = new HashMap<>();
 	protected final HashMap<Integer, Подзадача> подзадачи = new HashMap<>();
 	protected final HashMap<Integer, Эпик> эпики = new HashMap<>();
@@ -26,7 +23,6 @@ public class ВПамятиМенеджер implements Менеджер {
 
 	@Override
 	public List<Задача> получениеЗадач() {
-//		return менеджерЗадач.получениеВсех();
 		return new ArrayList<>(задачи.values());
 	}
 
@@ -73,7 +69,8 @@ public class ВПамятиМенеджер implements Менеджер {
 	 */
 	@Override
 	public void удалениеЗадачи(int ид) {
-		задачи.remove(ид);
+		final Задача задача = задачи.remove(ид);
+		историяЗадач.удалить(задача);
 	}
 
 	/**
@@ -83,7 +80,6 @@ public class ВПамятиМенеджер implements Менеджер {
 	 */
 	@Override
 	public List<Эпик> получениеЭпиков() {
-//		return менеджерЭпик.получениеВсех();
 		return new ArrayList<>(эпики.values());
 	}
 
@@ -100,8 +96,9 @@ public class ВПамятиМенеджер implements Менеджер {
 	 * Получение по идентификатору
 	 */
 	@Override
-	public Эпик получениеЭпиков(int ид) {
+	public Эпик получениеЭпика(int ид) {
 		final Эпик эпик = эпики.get(ид);
+		историяЗадач.добавить(эпик);
 		return эпик;
 	}
 
@@ -134,9 +131,66 @@ public class ВПамятиМенеджер implements Менеджер {
 	@Override
 	public void удалениеЭпика(int ид) {
 		final Эпик эпик = эпики.remove(ид);
+		историяЗадач.удалить(эпик);
 		for (Подзадача подзадача : эпик.getПодзадачи()) {
 			подзадачи.remove(подзадача.getИд());
+			историяЗадач.удалить(подзадача);
 		}
 	}
 
+	@Override
+	public List<Подзадача> получениеПодзадачЭпика(int эпикИд) {
+		return эпики.get(эпикИд).getПодзадачи();
+	}
+
+	@Override
+	public List<Подзадача> получениеПодзадач() {
+		return new ArrayList<>(подзадачи.values());
+	}
+
+	@Override
+	public void удалениеПодзадачи() {
+		подзадачи.clear();
+	}
+
+	@Override
+	public Подзадача получениеПодзадачи(int ид) {
+		final Подзадача подзадача = подзадачи.get(ид);
+		историяЗадач.добавить(подзадача);
+		return подзадача;
+	}
+
+	@Override
+	public void созданиеПодзадачи(Подзадача подзадача) {
+		подзадача.setИд(++генераторИД);
+		подзадачи.put(подзадача.getИд(), подзадача);
+		обновитьСтатусЭпика(подзадача.getЭпикИД());
+	}
+
+	@Override
+	public void обновлениеПодзадачи(Подзадача подзадача) {
+		if (подзадачи.containsKey(подзадача.getИд())) {
+			подзадачи.put(подзадача.getИд(), подзадача);
+			обновитьСтатусЭпика(подзадача.getЭпикИД());
+		}
+	}
+
+	private void обновитьСтатусЭпика(Integer эпикИД) {
+		// TODO
+	}
+
+	@Override
+	public void удалениеПодзадачи(int ид) {
+		final Подзадача подзадача = подзадачи.remove(ид);
+		if (подзадача == null) {
+			return;
+		}
+		историяЗадач.удалить(подзадача);
+		обновитьСтатусЭпика(подзадача.getЭпикИД());
+	}
+
+	@Override
+	public List<Задача> получениеИстории() {
+		return историяЗадач.получитьИсторию();
+	}
 }
