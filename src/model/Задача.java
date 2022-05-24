@@ -1,5 +1,6 @@
 package model;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 /**
@@ -12,6 +13,20 @@ public class Задача {
 	protected String название;
 	protected String описание;
 	protected String статус;
+
+	protected LocalDateTime начало;
+	protected int длительность;
+	protected LocalDateTime окончание;
+
+	public Задача(int ид, String название, String описание, String статус, LocalDateTime начало, int длительность) {
+		this.ид = ид;
+		this.название = название;
+		this.описание = описание;
+		this.статус = статус;
+		this.начало = начало;
+		this.длительность = длительность;
+		this.окончание = начало.plusMinutes(длительность);
+	}
 
 	public Задача(String название, String описание, int ид, String статус) {
 		this.название = название;
