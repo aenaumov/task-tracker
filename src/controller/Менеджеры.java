@@ -8,7 +8,7 @@ package controller;
 public class Менеджеры {
 
 	public static Менеджер получитьМенеджера() {
-		return new FileBackedTasksManager();
+		return new HttpTasksManager(8078);
 	}
 
 	public static ИсторияЗадач получитьИсторияЗадач() {

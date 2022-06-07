@@ -25,7 +25,21 @@ public class KVServer {
 		server.createContext("/register", this::register);
 		server.createContext("/save", this::save);
 		server.createContext("/load", this::load);
+//		server.createContext("/tasks/tasks", this::task);
+//		server.createContext("/tasks/epics", this::epics);
+//		//....
+//
+//		server.createContext("/tasks", this::task);
+
 	}
+
+//	private void task(HttpExchange httpExchange) {
+//		final String path = httpExchange.getRequestURI().getPath().substring(7);
+//		switch (path) {
+//			case "task": taskHandler(httpExchange);
+//				....
+//		}
+//	}
 
 	private void load(HttpExchange h) {
 		// TODO Добавьте получение значения по ключу

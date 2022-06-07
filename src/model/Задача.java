@@ -104,4 +104,28 @@ public class Задача {
 				", cтатус='" + статус + '\'' +
 				'}';
 	}
+
+	public LocalDateTime getНачало() {
+		return начало;
+	}
+
+	public void setНачало(LocalDateTime начало) {
+		this.начало = начало;
+	}
+
+	public int getДлительность() {
+		return длительность;
+	}
+
+	public void setДлительность(int длительность) {
+		this.длительность = длительность;
+	}
+
+	public LocalDateTime getОкончание() {
+		return окончание;
+	}
+
+	public void setОкончание(LocalDateTime окончание) {
+		this.окончание = окончание;
+	}
 }
